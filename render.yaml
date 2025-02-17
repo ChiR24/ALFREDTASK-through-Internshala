@@ -13,6 +13,8 @@ services:
         sync: false
       - key: NODE_ENV
         value: production
+      - key: CORS_ORIGIN
+        value: "*"
     healthCheckPath: /api/health
     domains:
       - api.flashcard-app.onrender.com
@@ -28,7 +30,7 @@ services:
     staticPublishPath: client/build
     envVars:
       - key: REACT_APP_API_URL
-        value: https://api.flashcard-app.onrender.com/api
+        value: https://alfredtask-through-internshala.onrender.com/api
       - key: NODE_ENV
         value: production
       - key: CI

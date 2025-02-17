@@ -16,16 +16,14 @@ const authRoutes = require('./routes/auth');
 const app = express();
 
 // CORS configuration
-const corsOptions = {
-    origin: process.env.NODE_ENV === 'production'
-        ? ['https://flashcard-app-client.onrender.com']
-        : 'http://localhost:3000',
+app.use(cors({
+    origin: process.env.NODE_ENV === 'production' ? '*' : 'http://localhost:3000',
     credentials: true,
-    optionsSuccessStatus: 200
-};
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // Middleware
-app.use(cors(corsOptions));
 app.use(express.json());
 
 // Health check endpoint
