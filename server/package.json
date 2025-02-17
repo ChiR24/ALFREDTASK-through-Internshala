@@ -4,11 +4,13 @@
   "description": "Backend for Flashcard Learning App with Leitner System",
   "main": "server.js",
   "engines": {
-    "node": ">=18.0.0"
+    "node": "18.x"
   },
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "build": "echo 'No build step required'",
+    "postinstall": "npm audit fix"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
