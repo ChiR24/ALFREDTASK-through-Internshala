@@ -23,7 +23,7 @@ services:
     env: static
     buildCommand: |
       cd client
-      npm ci
+      npm install --include=dev
       npm run build
     staticPublishPath: client/build
     envVars:
