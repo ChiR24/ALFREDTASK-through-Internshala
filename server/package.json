@@ -4,7 +4,7 @@
   "description": "Backend for Flashcard Learning App with Leitner System",
   "main": "server.js",
   "engines": {
-    "node": "18.x"
+    "node": "18.17.0"
   },
   "scripts": {
     "start": "node server.js",
@@ -19,7 +19,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.3.0",
-    "mongoose": "^8.1.1",
+    "mongoose": "^7.5.0",
     "express-validator": "^7.0.1"
   },
   "devDependencies": {

@@ -3,7 +3,7 @@ services:
   - type: web
     name: flashcard-app-api
     env: node
-    runtime: node:18
+    runtime: node:18.17.0
     buildCommand: cd server && npm install
     startCommand: cd server && npm start
     envVars:
