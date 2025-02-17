@@ -16,8 +16,10 @@ const authRoutes = require('./routes/auth');
 const app = express();
 
 // CORS configuration
+const isDevelopment = process.env.NODE_ENV === 'development';
 const allowedOrigins = [
     'http://localhost:3000',
+    'http://localhost:5001',
     'https://flashcard-app.onrender.com',
     'https://alfredtask-through-internshala.onrender.com'
 ];
@@ -25,17 +27,22 @@ const allowedOrigins = [
 app.use(cors({
     origin: function (origin, callback) {
         // allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
+        if (!origin || isDevelopment) return callback(null, true);
         if (allowedOrigins.indexOf(origin) === -1) {
             const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
             return callback(new Error(msg), false);
         }
         return callback(null, true);
     },
-    credentials: true,
+    credentials: false,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+    preflightContinue: false,
+    optionsSuccessStatus: 204
 }));
+
+// Add OPTIONS handling for preflight requests
+app.options('*', cors());
 
 // Middleware
 app.use(express.json());
