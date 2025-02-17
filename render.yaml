@@ -25,16 +25,14 @@ services:
     env: static
     buildCommand: |
       cd client
-      npm install --include=dev
-      npm run build
+      npm install
+      CI=false npm run build
     staticPublishPath: client/build
     envVars:
       - key: REACT_APP_API_URL
         value: https://alfredtask-through-internshala.onrender.com/api
       - key: NODE_ENV
         value: production
-      - key: CI
-        value: false
     headers:
       - path: /*
         name: Cache-Control
