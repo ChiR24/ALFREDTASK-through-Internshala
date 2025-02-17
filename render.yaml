@@ -14,7 +14,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: CORS_ORIGIN
-        value: "*"
+        value: https://alfredtask-through-internshala.onrender.com
     healthCheckPath: /api/health
     domains:
       - api.flashcard-app.onrender.com
@@ -39,6 +39,9 @@ services:
       - path: /*
         name: Cache-Control
         value: no-cache
+      - path: /*
+        name: Access-Control-Allow-Origin
+        value: "*"
     routes:
       - type: rewrite
         source: /*
