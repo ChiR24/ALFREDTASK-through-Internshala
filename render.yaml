@@ -15,7 +15,7 @@ services:
     healthCheckPath: /api/health
 
   # Frontend static site
-  - type: web
+  - type: static
     name: flashcard-app-client
     env: static
     buildCommand: cd client && npm install && npm run build
