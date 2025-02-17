@@ -14,16 +14,25 @@ services:
       - key: NODE_ENV
         value: production
     healthCheckPath: /api/health
+    domains:
+      - api.flashcard-app.onrender.com
 
   # Frontend static site
   - type: static
     name: flashcard-app-client
     env: static
-    buildCommand: cd client && npm install && npm run build
+    buildCommand: |
+      cd client
+      npm ci
+      npm run build
     staticPublishPath: client/build
     envVars:
       - key: REACT_APP_API_URL
-        value: https://flashcard-app-api.onrender.com/api
+        value: https://api.flashcard-app.onrender.com/api
+      - key: NODE_ENV
+        value: production
+      - key: CI
+        value: false
     headers:
       - path: /*
         name: Cache-Control
@@ -31,4 +40,6 @@ services:
     routes:
       - type: rewrite
         source: /*
-        destination: /index.html 
+        destination: /index.html
+    domains:
+      - flashcard-app.onrender.com 
