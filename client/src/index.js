@@ -5,7 +5,7 @@ import App from './App';
 import axios from 'axios';
 
 // Set base URL for axios
-axios.defaults.baseURL = 'http://localhost:5001';
+axios.defaults.baseURL = 'https://alfredtask-through-internshala.onrender.com/api';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
