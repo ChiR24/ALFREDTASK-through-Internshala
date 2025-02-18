@@ -202,11 +202,21 @@ const Sidebar = ({ isOpen, onToggle, isMobile, onClose }) => {
         }
       };
       
+      // Initial fetch
       fetchStats();
-      // Fetch stats every 30 seconds instead of continuous polling
-      const interval = setInterval(fetchStats, 30000);
-      return () => clearInterval(interval);
-    }, []);
+      
+      // Only set up polling if the sidebar is open
+      let interval;
+      if (isOpen) {
+        interval = setInterval(fetchStats, 60000); // Poll every minute instead of 30 seconds
+      }
+      
+      return () => {
+        if (interval) {
+          clearInterval(interval);
+        }
+      };
+    }, [isOpen]); // Add isOpen as a dependency
 
     if (isLoading && !stats) {
       return (

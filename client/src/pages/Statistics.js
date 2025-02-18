@@ -14,19 +14,20 @@ const Statistics = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetchStats();
-  }, []);
+    const fetchStats = async () => {
+      try {
+        const response = await axios.get('/api/flashcards/stats/summary');
+        setStats(response.data);
+      } catch (err) {
+        setError('Failed to load statistics');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const fetchStats = async () => {
-    try {
-      const response = await axios.get('/api/flashcards/stats/summary');
-      setStats(response.data);
-    } catch (err) {
-      setError('Failed to load statistics');
-    } finally {
-      setLoading(false);
-    }
-  };
+    // Only fetch once when component mounts
+    fetchStats();
+  }, []); // Empty dependency array for initial mount only
 
   if (loading) {
     return (

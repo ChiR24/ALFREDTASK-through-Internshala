@@ -69,8 +69,38 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await axios.get('/api/flashcards/stats/summary');
+        setStats(response.data);
+      } catch (err) {
+        setError('Failed to load statistics');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // Initial fetch
     fetchStats();
+    
+    // Set up polling with a longer interval for the dashboard
+    const interval = setInterval(fetchStats, 300000); // Poll every 5 minutes
+    
+    return () => clearInterval(interval);
+  }, []); // Empty dependency array for initial mount only
+
+  useEffect(() => {
+    const fetchRecentActivity = async () => {
+      try {
+        const response = await axios.get('/api/flashcards?limit=5');
+        setRecentActivity(response.data);
+      } catch (err) {
+        console.error('Failed to load recent activity');
+      }
+    };
+
     fetchRecentActivity();
+    // No polling for recent activity, just fetch once when component mounts
   }, []);
 
   useEffect(() => {
@@ -87,26 +117,6 @@ const Dashboard = () => {
     }
     setPreviousStats(stats);
   }, [stats]);
-
-  const fetchStats = async () => {
-    try {
-      const response = await axios.get('/api/flashcards/stats/summary');
-      setStats(response.data);
-    } catch (err) {
-      setError('Failed to load statistics');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchRecentActivity = async () => {
-    try {
-      const response = await axios.get('/api/flashcards?limit=5');
-      setRecentActivity(response.data);
-    } catch (err) {
-      console.error('Failed to load recent activity');
-    }
-  };
 
   if (loading) {
     return (
